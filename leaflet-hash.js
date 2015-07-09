@@ -13,45 +13,12 @@
 		}
 	};
 
-	L.Hash.parseHash = function(hash) {
-		if(hash.indexOf('#') === 0) {
-			hash = hash.substr(1);
-		}
-		var args = hash.split("/");
-		if (args.length == 3) {
-			var zoom = parseInt(args[0], 10),
-			lat = parseFloat(args[1]),
-			lon = parseFloat(args[2]);
-			if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
-				return false;
-			} else {
-				return {
-					center: new L.LatLng(lat, lon),
-					zoom: zoom
-				};
-			}
-		} else {
-			return false;
-		}
-	};
-
-	L.Hash.formatHash = function(map) {
-		var center = map.getCenter(),
-		    zoom = map.getZoom(),
-		    precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
-
-		return "#" + [zoom,
-			center.lat.toFixed(precision),
-			center.lng.toFixed(precision)
-		].join("/");
-	},
-
 	L.Hash.prototype = {
 		map: null,
 		lastHash: null,
 
-		parseHash: L.Hash.parseHash,
-		formatHash: L.Hash.formatHash,
+		lastHashParts: new Array(),
+		hashPartConnectors: new Array(),
 
 		init: function(map) {
 			this.map = map;
@@ -77,36 +44,56 @@
 			this.map = null;
 		},
 
-		onMapMove: function() {
-			// bail if we're moving the map (updating from a hash),
-			// or if the map is not yet loaded
+		registerHashPartConnector: function(connector) {
+			var idx = this.hashPartConnectors.length;
+			this.hashPartConnectors[idx] = connector;
+			return idx;
+		},
 
-			if (this.movingMap || !this.map._loaded) {
+		// called by connector 
+		updateHashPart: function(e) {
+			// bail if the map is not yet loaded
+			if (!this.map._loaded) {
 				return false;
 			}
 
-			var hash = this.formatHash(this.map);
+			//error handling
+			if (!e.data || e.idx<0 || e.idx>this.hashPartConnectors.length) {
+				console.log("ERROR: invalid index");
+				return;
+			}
+			this.lastHashParts[e.idx] = e.data;
+			var hash = "#" + this.lastHashParts.join("/");
+
+			console.log("hash will be set to:",hash);
 			if (this.lastHash != hash) {
 				location.replace(hash);
 				this.lastHash = hash;
 			}
 		},
 
-		movingMap: false,
 		update: function() {
 			var hash = location.hash;
 			if (hash === this.lastHash) {
 				return;
 			}
-			var parsed = this.parseHash(hash);
-			if (parsed) {
-				this.movingMap = true;
+			if(hash.indexOf('#') === 0) {
+				hash = hash.substr(1);
+			}
 
-				this.map.setView(parsed.center, parsed.zoom);
-
-				this.movingMap = false;
-			} else {
-				this.onMapMove(this.map);
+			var hashParts = hash.split("/");
+			if (hashParts.length != this.hashPartConnectors.length) {
+				console.log("can not call hashPartConnector because hash has invalid part count");
+				return;
+			}
+			for (var i=0; i<hashParts.length; i++) {
+				if (hashParts[i] === this.lastHashParts[i]) {
+					// if hashPart is unchanged
+					continue;
+				}else{
+					// call hashPartChancedListener with updated hash part
+					this.hashPartConnectors[i].applyHash(hashParts[i]);
+				}
 			}
 		},
 
@@ -128,8 +115,6 @@
 		isListening: false,
 		hashChangeInterval: null,
 		startListening: function() {
-			this.map.on("moveend", this.onMapMove, this);
-
 			if (HAS_HASHCHANGE) {
 				L.DomEvent.addListener(window, "hashchange", this.onHashChange);
 			} else {
@@ -140,8 +125,6 @@
 		},
 
 		stopListening: function() {
-			this.map.off("moveend", this.onMapMove, this);
-
 			if (HAS_HASHCHANGE) {
 				L.DomEvent.removeListener(window, "hashchange", this.onHashChange);
 			} else {
@@ -152,11 +135,5 @@
 	};
 	L.hash = function(map) {
 		return new L.Hash(map);
-	};
-	L.Map.prototype.addHash = function() {
-		this._hash = L.hash(this);
-	};
-	L.Map.prototype.removeHash = function() {
-		this._hash.removeFrom();
 	};
 })(window);
