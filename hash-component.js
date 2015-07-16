@@ -5,23 +5,18 @@
 			(doc_mode === undefined || doc_mode > 7);
 	})();
 
-	L.Hash = function(map) {
-		this.onHashChange = L.Util.bind(this.onHashChange, this);
+	HashComponent = function() {
 
-		if (map) {
-			this.init(map);
-		}
+			this.init();
 	};
 
-	L.Hash.prototype = {
-		map: null,
+	HashComponent.prototype = {
 		lastHash: null,
 
 		lastHashParts: new Array(),
 		hashPartConnectors: new Array(),
 
-		init: function(map) {
-			this.map = map;
+		init: function() {
 
 			// reset the hash
 			this.lastHash = null;
@@ -32,7 +27,7 @@
 			}
 		},
 
-		removeFrom: function(map) {
+		destroy: function() {
 			if (this.changeTimeout) {
 				clearTimeout(this.changeTimeout);
 			}
@@ -40,8 +35,6 @@
 			if (this.isListening) {
 				this.stopListening();
 			}
-
-			this.map = null;
 		},
 
 		registerHashPartConnector: function(connector) {
@@ -52,10 +45,6 @@
 
 		// called by connector 
 		updateHashPart: function(e) {
-			// bail if the map is not yet loaded
-			if (!this.map._loaded) {
-				return false;
-			}
 
 			//error handling
 			if (!e.data || e.idx<0 || e.idx>this.hashPartConnectors.length) {
@@ -116,7 +105,7 @@
 		hashChangeInterval: null,
 		startListening: function() {
 			if (HAS_HASHCHANGE) {
-				L.DomEvent.addListener(window, "hashchange", this.onHashChange);
+				window.addEventListener( "hashchange", this.onHashChange.bind(this));
 			} else {
 				clearInterval(this.hashChangeInterval);
 				this.hashChangeInterval = setInterval(this.onHashChange, 50);
@@ -126,14 +115,16 @@
 
 		stopListening: function() {
 			if (HAS_HASHCHANGE) {
-				L.DomEvent.removeListener(window, "hashchange", this.onHashChange);
+				// may produce problems because of bind in addEventListener
+				// TODO use saver approach
+				window.removeEventListener( "hashchange", this.onHashChange);
 			} else {
 				clearInterval(this.hashChangeInterval);
 			}
 			this.isListening = false;
 		}
 	};
-	L.hash = function(map) {
-		return new L.Hash(map);
+	hashComponent = function() {
+		return new HashComponent();
 	};
 })(window);

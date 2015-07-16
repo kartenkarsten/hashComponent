@@ -4,7 +4,7 @@
 		<title>Hash Demo</title>
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.css" />
 		<script src="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet-src.js"></script>
-		<script src="../leaflet-hash.js"></script>
+		<script src="../hash-component.js"></script>
 		<script src="../mapposition-hash-connector.js"></script>
 	</head>
 	<body>
@@ -18,8 +18,8 @@
 			
 			var map = new L.Map('map').addLayer(layerOsm).setView(new L.LatLng(40.524724, -3.816153), 6);
 
-			var hash = new L.Hash(map);
-			var connector = new L.MappositionStorageConnector(map,hash);
+			var hash = new HashComponent();
+			var connector = new L.MapPositionConnector(map,hash);
 
 		</script>
 </html>

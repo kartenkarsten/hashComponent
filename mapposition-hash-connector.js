@@ -1,12 +1,12 @@
 
-L.MappositionStorageConnector = function(map, storage) {
+L.MapPositionConnector = function(map, storage) {
 
 	if (map && storage) {
 		this.init(map, storage);
 	}
 };
 
-L.MappositionStorageConnector.formatHash = function(data) {
+L.MapPositionConnector.formatHash = function(data) {
 	console.log("format hash part");
 	var center = map.getCenter(),
 	zoom = map.getZoom(),
@@ -19,7 +19,7 @@ L.MappositionStorageConnector.formatHash = function(data) {
 	return hash;
 }
 
-L.MappositionStorageConnector.parseHash = function(hash) {
+L.MapPositionConnector.parseHash = function(hash) {
 	console.log("parse hash part");
 	var args = hash.split(";");
 	if (args.length = 3) {
@@ -39,14 +39,14 @@ L.MappositionStorageConnector.parseHash = function(hash) {
 		}
 }
 
-L.MappositionStorageConnector.prototype = {
+L.MapPositionConnector.prototype = {
 	map: null,
 	storage: null,
 	idx:null,
 	lastHash: null,
 
-	parseHash: L.MappositionStorageConnector.parseHash,
-	formatHash: L.MappositionStorageConnector.formatHash,
+	parseHash: L.MapPositionConnector.parseHash,
+	formatHash: L.MapPositionConnector.formatHash,
 
 
 	init: function(map, storage) {
@@ -94,6 +94,6 @@ L.MappositionStorageConnector.prototype = {
 		this.isListening = false;
 	}
 };
-L.mappositionStorageConnector = function(map) {
-	return new L.MappositionStorageConnector(map);
+L.mapPositionConnector = function(map) {
+	return new L.MapPositionConnector(map);
 };
