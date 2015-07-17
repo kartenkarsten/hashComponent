@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Leaflet-hash by mlevans</title>
+    <title>HashComponent by kartenkarsten</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,58 +15,63 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Leaflet-hash</h1>
-        <p>Add URL hashes to web pages with Leaflet maps</p>
+        <h1>HashComponent</h1>
+        <p>Add URL hashes to web pages eg the position of Leaflet maps</p>
 
-        <p class="view"><a href="https://github.com/mlevans/leaflet-hash">View the Project on GitHub <small>mlevans/leaflet-hash</small></a></p>
+        <p class="view"><a href="https://github.com/kartenkarsten/hashComponent">View the Project on GitHub <small>kartenkarsten/hashComponent</small></a></p>
 
 
         <ul>
-          <li><a href="https://github.com/mlevans/leaflet-hash/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mlevans/leaflet-hash/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mlevans/leaflet-hash">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/kartenkarsten/hashComponent/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kartenkarsten/hashComponent/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kartenkarsten/hashComponent">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
-        <p>Leaflet-hash lets you to add dynamic URL hashes to web pages with Leaflet maps. You can easily
+        <h1>
+<a id="hash-component" class="anchor" href="#hash-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hash Component</h1>
+
+<p>Hash Component lets you to add dynamic URL hashes to web pages with eg. the position of your current Leaflet map view. You can easily
 link users to specific map views.</p>
 
-<h3>Demo</h3>
+<h3>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h3>
 
-<p>You can view a demo of leaflet-hash at <a href="http://mlevans.github.com/leaflet-hash/map.html">mlevans.github.com/leaflet-hash/map.html</a>.</p>
+<p>You can view a demo of HashComponent at <a href="http://kartenkarsten.github.io/HashComponent/demo/index.html">http://kartenkarsten.github.io/hashComponent/demo</a>.</p>
 
-<h3>Usage</h3>
+<h3>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h3>
 
 <ol>
 <li><p>Prepare a basic leaflet map. You can find instructions on <a href="http://leaflet.cloudmade.com/examples/quick-start.html">Leaflet's quick-start guide</a>.</p></li>
-<li><p>Include <a href="https://github.com/mlevans/leaflet-hash/blob/master/leaflet-hash.js">leaflet-hash.js</a>.</p></li>
+<li><p>Include core <a href="https://github.com/kartenkarsten/hashComponent/blob/master/hash-component.js">hash-component.js</a>.</p></li>
+<li><p>Include a connector for map position <a href="https://github.om/kartenkarsten/hashComponent/blob/master/mapposition-hash-connector.js">mapposition-hash-connector.js</a>.</p></li>
 <li>
 <p>Once you have initialized the map (an instance of <a href="http://leaflet.cloudmade.com/reference.html#map-usage">L.Map</a>), add the following code:</p>
 
-<div class="highlight"><pre>    <span class="c1">// Assuming your map instance is in a variable called map</span>
-    <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">L</span><span class="p">.</span><span class="nx">Hash</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre>    <span class="pl-c">// Assuming your map instance is in a variable called map</span>
+    <span class="pl-k">var</span> hash <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">HashComponent</span>();</pre></div>
+
+<p>and for map position Connector:</p>
+
+<div class="highlight highlight-javascript"><pre>    <span class="pl-c">// Assuming your map instance is in a variable called map</span>
+    <span class="pl-k">var</span> connector <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">L.MapPositionConnector</span>(map,hash);</pre></div>
 </li>
-</ol><h3>Author</h3>
+</ol>
 
-<p><a href="https://github.com/mlevans" class="user-mention">@mlevans</a></p>
+<h3>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h3>
 
-<h3>Contributors</h3>
+<p><a href="http://github.com/mlevans">@mlevans</a>
+<a href="http://github.com/kartenkarsten">@kartenkarsten</a></p>
 
-<p><a href="https://github.com/calvinmetcalf" class="user-mention">@calvinmetcalf</a></p>
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
 
-<p><a href="https://github.com/rsudekum" class="user-mention">@rsudekum</a></p>
-
-<p><a href="https://github.com/tmcw" class="user-mention">@tmcw</a></p>
-
-<p><a href="https://github.com/yohanboniface" class="user-mention">@yohanboniface</a></p>
-
-<h3>License</h3>
-
-<p>MIT License. See <a href="https://github.com/mlevans/leaflet-hash/blob/master/LICENSE.md">LICENSE</a> for details.</p>
+<p>MIT License. See <a href="https://github.com/kartenkarsten/leaflet-hash/blob/master/LICENSE.md">LICENSE</a> for details.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/mlevans">mlevans</a></p>
+        <p>This project is maintained by <a href="https://github.com/kartenkarsten">kartenkarsten</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
