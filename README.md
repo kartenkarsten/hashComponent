@@ -12,7 +12,7 @@ You can view a demo of HashComponent at [http://kartenkarsten.github.io/hashComp
 
 2. Include core [hash-component.js](https://github.com/kartenkarsten/hashComponent/blob/master/hash-component.js).
 
-2. Include a connector for map position [mapposition-hash-connector.js](https://github.om/kartenkarsten/hashComponent/blob/master/mapposition-hash-connector.js).
+2. Include a connector for map position [mapposition-hash-connector.js](https://github.com/kartenkarsten/hashComponent/blob/master/mapposition-hash-connector.js).
 
 3. Once you have initialized the map (an instance of [L.Map](http://leaflet.cloudmade.com/reference.html#map-usage)), add the following code:
 
