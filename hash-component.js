@@ -47,7 +47,7 @@
 		updateHashPart: function(e) {
 
 			//error handling
-			if (!e.data || e.idx<0 || e.idx>this.hashPartConnectors.length) {
+			if (e.idx<0 || e.idx>this.hashPartConnectors.length) {
 				console.log("ERROR: invalid index");
 				return;
 			}
